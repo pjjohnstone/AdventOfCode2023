@@ -11,3 +11,9 @@ let charToInt (c: char) =
 
 let stringToInt str =
   System.Int32.Parse str
+
+let stringReverse (str: string) =
+  str
+  |> Seq.toArray
+  |> Array.rev
+  |> System.String.Concat

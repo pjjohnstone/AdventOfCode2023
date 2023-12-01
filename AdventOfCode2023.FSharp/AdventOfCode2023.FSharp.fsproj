@@ -7,6 +7,9 @@
 
   <ItemGroup>
     <Compile Include="Common\Common.fs" />
+    <Content Include="day1\testData2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="day1\input.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
