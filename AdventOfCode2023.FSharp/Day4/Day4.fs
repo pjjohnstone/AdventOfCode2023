@@ -19,22 +19,31 @@ let card (line: string) =
   let own = 
     stripCruft halves[1]
     |> getNumbers
-  (winning,own)
+  let cardNumber =
+    halves.Head.Split(':')[0]
+    |> Seq.toList
+    |> List.filter (fun c -> System.Char.IsNumber(c))
+    |> System.String.Concat
+    |> stringToInt
+  (cardNumber,winning,own)
 
 let cards lines =
   lines
   |> List.map card
 
-let scoringNumbers (card: int list * int list) =
-  let (winning,own) = card
-  Set.intersect (Set.ofList winning) (Set.ofList own)
-  |> Set.toList
+let scoringNumbers (card: int * int list * int list) =
+  let (cardNum,winning,own) = card
+  let scoringNumbers = 
+    Set.intersect (Set.ofList winning) (Set.ofList own)
+    |> Set.toList
+  (cardNum,scoringNumbers)
 
-let calculateScore (scoringNumbers: int list) =
-  match scoringNumbers.Length with
+let calculateScore (scoringNumbers: int * int list) =
+  let (_,scoring) = scoringNumbers
+  match scoring.Length with
   | 0 -> 0.0
   | 1 -> 1.0
-  | _ -> 2.0 ** (float (scoringNumbers.Length - 1))
+  | _ -> 2.0 ** (float (scoring.Length - 1))
 
 let solve1 lines =
   lines
@@ -43,3 +52,20 @@ let solve1 lines =
   |> List.map calculateScore
   |> List.sum
   |> int
+
+let awardCardsWithIndices (scoringCard: int * int list) =
+  let (cardNo,score) = scoringCard
+  List.init score.Length (fun v -> (v + 1) + cardNo)
+
+//let awardCards cards =
+//  let rec awardCardsRec cards totalCards =
+//    let newCards =
+//      cards
+//      |> List.map scoringNumbers
+//  awardCardsRec cards cards
+
+let solve2 lines =
+  lines
+  |> cards
+  |> List.map scoringNumbers
+  |> List.map awardCardsWithIndices
