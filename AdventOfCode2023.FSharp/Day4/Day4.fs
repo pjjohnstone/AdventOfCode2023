@@ -66,13 +66,12 @@ let awardCards cards =
     match cards with
     | [] -> totalCards
     | _ ->
-      let newCards =
-        cards
-        |> List.map scoringNumbers
-        |> List.map awardCardsWithIndices
-        |> List.concat
-        |> List.map (fun n -> getCardWithNumber totalCards n)
-      awardCardsRec newCards totalCards@newCards
+      cards
+      |> List.map scoringNumbers
+      |> List.map awardCardsWithIndices
+      |> List.concat
+      |> List.map (fun n -> getCardWithNumber totalCards n)
+      |> fun nc -> awardCardsRec nc totalCards@nc
   awardCardsRec cards cards
 
 let solve2 lines =
