@@ -53,19 +53,30 @@ let solve1 lines =
   |> List.sum
   |> int
 
+let getCardWithNumber cards num =
+  cards
+  |> List.find (fun (n,_,_) -> n = num)
+
 let awardCardsWithIndices (scoringCard: int * int list) =
   let (cardNo,score) = scoringCard
   List.init score.Length (fun v -> (v + 1) + cardNo)
 
-//let awardCards cards =
-//  let rec awardCardsRec cards totalCards =
-//    let newCards =
-//      cards
-//      |> List.map scoringNumbers
-//  awardCardsRec cards cards
+let awardCards cards =
+  let rec awardCardsRec cards totalCards =
+    match cards with
+    | [] -> totalCards
+    | _ ->
+      let newCards =
+        cards
+        |> List.map scoringNumbers
+        |> List.map awardCardsWithIndices
+        |> List.concat
+        |> List.map (fun n -> getCardWithNumber totalCards n)
+      awardCardsRec newCards totalCards@newCards
+  awardCardsRec cards cards
 
 let solve2 lines =
   lines
   |> cards
-  |> List.map scoringNumbers
-  |> List.map awardCardsWithIndices
+  |> awardCards
+  |> fun c -> c.Length
