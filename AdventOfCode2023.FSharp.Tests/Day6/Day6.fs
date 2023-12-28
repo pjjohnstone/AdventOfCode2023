@@ -38,7 +38,7 @@ let ``Return number of strategies that beat the record`` s =
 
 let totalMarginOfErrorCases = 
   [
-    TestCaseData([(7,9);(15,40);(30,200)]).Returns(288)
+    TestCaseData([(7L,9L);(15L,40L);(30L,200L)]).Returns(288L)
   ]
 
 [<TestCaseSource("totalMarginOfErrorCases")>]
@@ -54,3 +54,8 @@ let parseRacesCases =
 let ``Return races and records as tuples from text input`` s =
   let expected = [(55,401);(99,1485);(97,2274);(93,1405)]
   Assert.That((parseRaces s), Is.EquivalentTo expected)
+
+[<TestCaseSource("parseRacesCases")>]
+let ``Return one single massive race from text input`` s =
+  let expected = (55999793L,401148522741405L)
+  Assert.That((parseRaces2 s), Is.EqualTo expected)

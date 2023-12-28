@@ -12,6 +12,9 @@ let charToInt (c: char) =
 let stringToInt str =
   System.Int32.Parse str
 
+let stringToInt64 str =
+  System.Int64.Parse str
+
 let stringReverse (str: string) =
   str
   |> Seq.toArray
