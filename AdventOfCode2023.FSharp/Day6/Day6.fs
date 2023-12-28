@@ -16,3 +16,12 @@ let totalMarginOfError races =
   |> List.map (fun (d,r) -> winningResults d r)
   |> List.fold (*) 1
   
+let parseRaces (lines: string list) =
+  lines
+  |> List.map (fun s -> s.Split(':'))
+  |> List.map (fun l -> l[1])
+  |> List.map (fun s -> s.Split(' '))
+  |> List.map (fun a -> Array.filter (fun v -> v <> "") a)
+  |> List.map (fun a -> Array.map stringToInt a)
+  |> List.map Array.toList
+  |> fun l -> List.zip l[0] l[1]

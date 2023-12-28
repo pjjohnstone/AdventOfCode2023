@@ -44,3 +44,13 @@ let totalMarginOfErrorCases =
 [<TestCaseSource("totalMarginOfErrorCases")>]
 let ``Return product of all winning strategies`` s =
   totalMarginOfError s
+
+let parseRacesCases = 
+  [
+    TestCaseData(["Time:        55     99     97     93";"Distance:   401   1485   2274   1405"])
+  ]
+
+[<TestCaseSource("parseRacesCases")>]
+let ``Return races and records as tuples from text input`` s =
+  let expected = [(55,401);(99,1485);(97,2274);(93,1405)]
+  Assert.That((parseRaces s), Is.EquivalentTo expected)
