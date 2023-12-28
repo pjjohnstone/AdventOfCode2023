@@ -23,3 +23,24 @@ let distanceTestCases =
 let ``Calculate total distance travelled`` s =
   let (duration,press) = s
   distance duration press
+
+let winningResultsCases = 
+  [
+    TestCaseData(7,9).Returns(4)
+    TestCaseData(15,40).Returns(8)
+    TestCaseData(30,200).Returns(9)
+  ]
+
+[<TestCaseSource("winningResultsCases")>]
+let ``Return number of strategies that beat the record`` s =
+  let (duration,record) = s
+  winningResults duration record
+
+let totalMarginOfErrorCases = 
+  [
+    TestCaseData([(7,9);(15,40);(30,200)]).Returns(288)
+  ]
+
+[<TestCaseSource("totalMarginOfErrorCases")>]
+let ``Return product of all winning strategies`` s =
+  totalMarginOfError s
