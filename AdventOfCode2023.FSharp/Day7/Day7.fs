@@ -69,4 +69,7 @@ let handRank hand =
         | false ->
           match (twoPair hand) with
           | true -> 3
-          | false -> 0
+          | false ->
+            match (pair hand) with
+            | true -> 2
+            | false -> 1
