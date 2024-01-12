@@ -24,10 +24,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Compile Include="Day4\Day4.fs" />
-    <Content Include="day6\input.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Compile Include="Day6\Day6.fs" />
+    <Content Include="Day6\input.txt" />
+    <Compile Include="Day7\Day7.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

@@ -1,11 +1,7 @@
-module AdventOfCode2023.FSharp.Tests
+module Day6Should
 
 open NUnit.Framework
 open Day6
-
-[<SetUp>]
-let Setup () =
-    ()
 
 let distanceTestCases = 
   [
