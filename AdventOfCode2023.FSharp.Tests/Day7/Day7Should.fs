@@ -109,3 +109,7 @@ let ``Returns list of hands and bids in ranked order`` s =
 [<TestCaseSource("handOrderCases")>]
 let ``Returns total value of hands`` s =
   Assert.That(calculateValue s, Is.EqualTo 6440)
+
+[<Test>]
+let ``Parse an input line`` =
+  Assert.That(parseLine "26J35 507", Is.EqualTo ("26J35", 507))

@@ -1,5 +1,7 @@
 ﻿// For more information see https://aka.ms/fsharp-console-apps
 
-let lines = getLines "Day6/input.txt"
-let races = Day6.parseRaces2 lines
-printfn "Total Margin: %i" (Day6.totalMarginOfError [races])
+let lines = getLines "Day7/input.txt"
+let hands = 
+  lines
+  |> List.map Day7.parseLine
+printfn "Total Value: %i" (Day7.calculateValue hands)

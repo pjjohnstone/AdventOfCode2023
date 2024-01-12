@@ -109,3 +109,7 @@ let calculateValue (handsWithBids: (string * int) list) =
   |> List.rev
   |> List.mapi (fun i (_,b) -> b * (i + 1))
   |> List.sum
+
+let parseLine (line: string) =
+  line.Split(' ')
+  |> fun a -> (a[0], stringToInt a[1])
