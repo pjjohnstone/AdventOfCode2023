@@ -36,5 +36,16 @@ let threeOfAKind hand =
 let pair hand =
   xOfAKind hand 2
 
+let fullHouse (hand: string) =
+  let (_,counts) = 
+    hand
+    |> Seq.toList
+    |> List.countBy id
+    |> List.unzip
+  counts
+  |> List.distinct
+  |> List.filter (fun c -> c >= 2)
+  |> List.length = 2
+
 let handRank hand =
   1

@@ -56,3 +56,12 @@ let fourOfAKindCases = [
 [<TestCaseSource("fourOfAKindCases")>]
 let ``Return true if hand is 4 of a kind`` s =
   fourOfAKind s
+
+let fullHouseCases = [
+  TestCaseData("222KK").Returns(true)
+  TestCaseData("223KK").Returns(false)
+]
+
+[<TestCaseSource("fullHouseCases")>]
+let ``Return true if hand is full house`` s =
+  fullHouse s
