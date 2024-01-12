@@ -16,3 +16,19 @@ let value card =
   | '3' -> 2
   | '2' -> 1
   | _ -> 0
+
+let fiveOfAKind (hand: string) =
+  hand
+  |> Seq.toList
+  |> List.distinct
+  |> List.length = 1
+
+let fourOfAKind (hand: string) =
+  hand
+  |> Seq.toList
+  |> List.countBy id
+  |> List.filter (fun (_,c) -> c = 4)
+  |> List.length = 1
+
+let handRank hand =
+  1

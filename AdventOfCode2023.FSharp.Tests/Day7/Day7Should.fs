@@ -22,3 +22,37 @@ let valueCases = [
 [<TestCaseSource("valueCases")>]
 let ``Return correct value for a given card`` s =
   value s
+
+let handTypeRankCases = [
+  TestCaseData("AAAAA").Returns(7)
+  TestCaseData("AAAAK").Returns(6)
+  TestCaseData("QQQ99").Returns(5)
+  TestCaseData("23999").Returns(4)
+  TestCaseData("23432").Returns(3)
+  TestCaseData("A23A4").Returns(2)
+  TestCaseData("23456").Returns(1)
+]
+
+[<TestCaseSource("handTypeRankCases")>]
+let ``Return the type rank of a given hand`` s =
+  handRank s
+
+let fiveOfAKindCases = [
+  TestCaseData("KKKKK").Returns(true)  
+  TestCaseData("22222").Returns(true)
+  TestCaseData("23456").Returns(false)
+  TestCaseData("QQQQ5").Returns(false)
+]
+
+[<TestCaseSource("fiveOfAKindCases")>]
+let ``Return true if hand is 5 of a kind`` s =
+  fiveOfAKind s
+
+let fourOfAKindCases = [
+  TestCaseData("AAAAK").Returns(true)
+  TestCaseData("QQQ99").Returns(false)
+]
+
+[<TestCaseSource("fourOfAKindCases")>]
+let ``Return true if hand is 4 of a kind`` s =
+  fourOfAKind s
