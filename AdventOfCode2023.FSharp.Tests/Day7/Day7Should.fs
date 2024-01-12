@@ -72,5 +72,15 @@ let twoPairCases = [
 ]
 
 [<TestCaseSource("twoPairCases")>]
-let ``Return true if hand is twoi pairs`` s =
+let ``Return true if hand is two pairs`` s =
   twoPair s
+
+let tieBreakCases = [
+  TestCaseData("KK677", "KTJJT").Returns("KK677")
+  TestCaseData("T55J5", "QQQJA").Returns("QQQJA")
+]
+
+[<TestCaseSource("tieBreakCases")>]
+let ``Return winning hand in similar hands`` s =
+  let (hand1,hand2) = s
+  tieBreak hand1 hand2

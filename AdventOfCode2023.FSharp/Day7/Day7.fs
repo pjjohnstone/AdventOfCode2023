@@ -73,3 +73,11 @@ let handRank hand =
             match (pair hand) with
             | true -> 2
             | false -> 1
+
+let tieBreak (hand1: string) (hand2: string) =
+  let pairs = List.zip (hand1 |> Seq.toList) (hand2 |> Seq.toList)
+  let indexOfFirstDifference = 
+    pairs
+    |> List.findIndex (fun (left,right) -> left <> right)
+  let (card1,card2) = pairs[indexOfFirstDifference]
+  if value card1 > value card2 then hand1 else hand2
