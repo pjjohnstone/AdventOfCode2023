@@ -81,3 +81,31 @@ let tieBreak (hand1: string) (hand2: string) =
     |> List.findIndex (fun (left,right) -> left <> right)
   let (card1,card2) = pairs[indexOfFirstDifference]
   if value card1 > value card2 then hand1 else hand2
+
+let tieBreakHands (hands: (string * int * int) * (string * int * int)) =
+  let ((lHand,lBid,lRank),(rHand,rBid,rRank)) = hands
+  if lRank = rRank then
+    if (tieBreak lHand rHand) = lHand 
+      then (lHand,lBid,lRank + 1),(rHand,rBid,rRank)
+    else (lHand,lBid,lRank),(rHand,rBid,rRank + 1)
+  else (lHand,lBid,lRank),(rHand,rBid,rRank)
+
+let handOrder (handsWithBids: (string * int) list) =
+  handsWithBids
+  |> List.map (fun (hand,bid) -> (hand,bid,(handRank hand)))
+  |> List.sortByDescending (fun (_,_,score) -> score)
+  |> List.pairwise
+  |> List.map tieBreakHands
+  |> List.unzip
+  |> fun (l,r) -> List.append l r
+  |> List.distinctBy (fun (hand,_,score) -> hand + score.ToString())
+  |> List.sortByDescending (fun (_,_,score) -> score)
+  |> List.distinctBy (fun (hand,_,_) -> hand)
+  |> List.map (fun (hand,bid,_) -> (hand,bid))
+
+let calculateValue (handsWithBids: (string * int) list) =
+  handsWithBids
+  |> handOrder
+  |> List.rev
+  |> List.mapi (fun i (_,b) -> b * (i + 1))
+  |> List.sum

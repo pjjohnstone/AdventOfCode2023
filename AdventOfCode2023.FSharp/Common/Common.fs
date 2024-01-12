@@ -20,3 +20,4 @@ let stringReverse (str: string) =
   |> Seq.toArray
   |> Array.rev
   |> System.String.Concat
+

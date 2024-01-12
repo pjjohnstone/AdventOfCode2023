@@ -84,3 +84,28 @@ let tieBreakCases = [
 let ``Return winning hand in similar hands`` s =
   let (hand1,hand2) = s
   tieBreak hand1 hand2
+
+let handOrderCases = [
+  TestCaseData([
+    ("32T3K", 765)
+    ("T55J5", 684)
+    ("KK677", 28)
+    ("KTJJT", 220)
+    ("QQQJA", 483)
+  ])
+]
+
+[<TestCaseSource("handOrderCases")>]
+let ``Returns list of hands and bids in ranked order`` s =
+  let expected = [
+    ("QQQJA", 483)
+    ("T55J5", 684)
+    ("KK677", 28)
+    ("KTJJT", 220)
+    ("32T3K", 765)
+  ]
+  Assert.That(handOrder s, Is.EquivalentTo expected)
+
+[<TestCaseSource("handOrderCases")>]
+let ``Returns total value of hands`` s =
+  Assert.That(calculateValue s, Is.EqualTo 6440)
