@@ -47,5 +47,26 @@ let fullHouse (hand: string) =
   |> List.filter (fun c -> c >= 2)
   |> List.length = 2
 
+let twoPair (hand: string) =
+  hand
+  |> Seq.toList
+  |> List.countBy id
+  |> List.filter (fun (_,c) -> c = 2)
+  |> List.length = 2
+
 let handRank hand =
-  1
+  match (fiveOfAKind hand) with
+  | true -> 7
+  | false ->
+    match (fourOfAKind hand) with
+    | true -> 6
+    | false ->
+      match (fullHouse hand) with
+      | true -> 5
+      | false ->
+        match (threeOfAKind hand) with
+        | true -> 4
+        | false ->
+          match (twoPair hand) with
+          | true -> 3
+          | false -> 0

@@ -65,3 +65,12 @@ let fullHouseCases = [
 [<TestCaseSource("fullHouseCases")>]
 let ``Return true if hand is full house`` s =
   fullHouse s
+
+let twoPairCases = [
+  TestCaseData("223KK").Returns(true)
+  TestCaseData("243KK").Returns(false)
+]
+
+[<TestCaseSource("twoPairCases")>]
+let ``Return true if hand is twoi pairs`` s =
+  twoPair s
