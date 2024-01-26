@@ -82,25 +82,34 @@ let tieBreak (hand1: string) (hand2: string) =
   let (card1,card2) = pairs[indexOfFirstDifference]
   if value card1 > value card2 then hand1 else hand2
 
-let tieBreakHands (hands: (string * int * int) * (string * int * int)) =
-  let ((lHand,lBid,lRank),(rHand,rBid,rRank)) = hands
+let tieBreakHandsList (hand1: string * int * int) (hand2: string * int * int) =
+  let (lHand, lBid, lRank) = hand1
+  let (rHand, rBid, rRank) = hand2
   if lRank = rRank then
     if (tieBreak lHand rHand) = lHand 
-      then (lHand,lBid,lRank + 1),(rHand,rBid,rRank)
-    else (lHand,lBid,lRank),(rHand,rBid,rRank + 1)
-  else (lHand,lBid,lRank),(rHand,rBid,rRank)
+      then [(lHand,lBid,lRank + 1);(rHand,rBid,rRank)]
+    else [(lHand,lBid,lRank);(rHand,rBid,rRank + 1)]
+  else [(lHand,lBid,lRank);(rHand,rBid,rRank)]
+
+let handArrange (handsWithBidsAndRanks: (string * int * int) list) =
+  let rec handArrangeRec (handsWithBidsAndRanks: (string * int * int) list) orderedHands =
+    match handsWithBidsAndRanks with
+    | [] -> orderedHands
+    | _ ->
+      match orderedHands with
+      | [] ->
+        handArrangeRec (List.removeManyAt 0 2 handsWithBidsAndRanks) (tieBreakHandsList handsWithBidsAndRanks[0] handsWithBidsAndRanks[1])
+      | _ ->
+        let newOrdered = List.removeAt ((List.length orderedHands) - 1) orderedHands
+        handArrangeRec (handsWithBidsAndRanks.Tail) (newOrdered@(tieBreakHandsList (List.last orderedHands) handsWithBidsAndRanks[0]))
+  handArrangeRec handsWithBidsAndRanks []
 
 let handOrder (handsWithBids: (string * int) list) =
   handsWithBids
   |> List.map (fun (hand,bid) -> (hand,bid,(handRank hand)))
   |> List.sortByDescending (fun (_,_,score) -> score)
-  |> List.pairwise
-  |> List.map tieBreakHands
-  |> List.unzip
-  |> fun (l,r) -> List.append l r
-  |> List.distinctBy (fun (hand,_,score) -> hand + score.ToString())
+  |> handArrange
   |> List.sortByDescending (fun (_,_,score) -> score)
-  |> List.distinctBy (fun (hand,_,_) -> hand)
   |> List.map (fun (hand,bid,_) -> (hand,bid))
 
 let calculateValue (handsWithBids: (string * int) list) =
