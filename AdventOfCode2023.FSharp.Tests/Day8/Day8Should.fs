@@ -12,3 +12,12 @@ let instructionCases = [
 let ``Pick correct path based on instruction`` input =
   let (instruction, paths) = input
   nextNode instruction paths
+  
+let instructionParserCases = [
+  TestCaseData("LRR").Returns([Left; Right; Right])
+  TestCaseData("RLR").Returns([Right; Left; Right])
+]
+
+[<TestCaseSource("instructionParserCases")>]
+let ``Parse instructions from instruction string`` instructionString =
+  parseInstructions instructionString
