@@ -30,3 +30,20 @@ let nodeParseCases = [
 [<TestCaseSource("nodeParseCases")>]
 let ``Parse nodes from node strings`` nodeString =
   parseNode nodeString
+  
+let routeCases = [
+  TestCaseData([
+    Left
+    Left
+    Right
+  ],[
+    {Label = "AAA"; Left = "BBB"; Right = "BBB"}
+    {Label = "BBB"; Left = "AAA"; Right = "ZZZ"}
+    {Label = "ZZZ"; Left = "ZZZ"; Right = "ZZZ"}
+  ]).Returns(6)
+]
+
+[<TestCaseSource("routeCases")>]
+let ``Calculate steps to reach ZZZ`` input =
+  let (instructions, nodes) = input
+  traverseRoute nodes instructions

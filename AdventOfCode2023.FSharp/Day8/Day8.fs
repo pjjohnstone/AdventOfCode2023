@@ -34,3 +34,16 @@ let parseNode nodeString =
   |> List.chunkBySize 3
   |> List.map System.String.Concat
   |> fun parts -> {Label = parts[0]; Left = parts[1]; Right = parts[2]}
+
+let findNodeByLabel nodes label =
+  nodes |> List.find (fun node -> node.Label = label)
+
+let traverseRoute nodes (instructions: Instruction list)  =
+  let rec traverseRouteRec nodes activeNode (instructions: Instruction list) usedInstructions steps =
+    match instructions with
+    | [] -> traverseRouteRec nodes activeNode (List.rev usedInstructions) [] steps
+    | _ ->
+      match activeNode.Label with
+      | "ZZZ" -> steps
+      | _ -> traverseRouteRec nodes (findNodeByLabel nodes (nextNode instructions.Head activeNode)) instructions.Tail (instructions.Head::usedInstructions) (steps + 1)
+  traverseRouteRec nodes (List.head nodes) instructions [] 0
