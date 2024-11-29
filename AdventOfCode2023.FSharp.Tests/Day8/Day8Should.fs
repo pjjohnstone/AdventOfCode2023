@@ -21,3 +21,12 @@ let instructionParserCases = [
 [<TestCaseSource("instructionParserCases")>]
 let ``Parse instructions from instruction string`` instructionString =
   parseInstructions instructionString
+  
+let nodeParseCases = [
+  TestCaseData("AAA = (BBB, BBB)").Returns({Label = "AAA"; Left = "BBB"; Right = "BBB"})
+  TestCaseData("ZZZ = (ZZZ, ZZZ)").Returns({Label = "ZZZ"; Left = "ZZZ"; Right = "ZZZ"})
+]
+
+[<TestCaseSource("nodeParseCases")>]
+let ``Parse nodes from node strings`` nodeString =
+  parseNode nodeString

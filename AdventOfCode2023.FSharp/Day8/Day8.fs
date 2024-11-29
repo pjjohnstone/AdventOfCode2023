@@ -26,3 +26,11 @@ let parseInstructions instructionString =
   |> Seq.toList
   |> List.map parseInstruction
   |> List.choose id
+  
+let parseNode nodeString =
+  nodeString
+  |> Seq.toList
+  |> List.filter System.Char.IsLetter
+  |> List.chunkBySize 3
+  |> List.map System.String.Concat
+  |> fun parts -> {Label = parts[0]; Left = parts[1]; Right = parts[2]}
