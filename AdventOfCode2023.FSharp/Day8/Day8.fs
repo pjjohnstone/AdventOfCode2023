@@ -46,17 +46,19 @@ let traverseRoute nodes (instructions: Instruction list)  =
       match activeNode.Label with
       | "ZZZ" -> steps
       | _ -> traverseRouteRec nodes (findNodeByLabel nodes (nextNode instructions.Head activeNode)) instructions.Tail (instructions.Head::usedInstructions) (steps + 1)
-  traverseRouteRec nodes (List.head nodes) instructions [] 0
+  traverseRouteRec nodes (findNodeByLabel nodes "AAA") instructions [] 0
   
 let parsePuzzleInput input =
   let instructions =
     input
-    |> Array.toList
     |> List.head
     |> parseInstructions
   let nodes =
     input
-    |> Array.skip 2
-    |> Array.toList
+    |> List.skip 2
     |> List.map parseNode
   (instructions, nodes)
+  
+let calculate input =
+  let instructions, nodes = parsePuzzleInput input
+  traverseRoute nodes instructions

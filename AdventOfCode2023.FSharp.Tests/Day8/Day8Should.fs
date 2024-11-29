@@ -10,7 +10,7 @@ let instructionCases = [
 
 [<TestCaseSource("instructionCases")>]
 let ``Pick correct path based on instruction`` input =
-  let (instruction, paths) = input
+  let instruction, paths = input
   nextNode instruction paths
   
 let instructionParserCases = [
@@ -45,17 +45,17 @@ let routeCases = [
 
 [<TestCaseSource("routeCases")>]
 let ``Calculate steps to reach ZZZ`` input =
-  let (instructions, nodes) = input
+  let instructions, nodes = input
   traverseRoute nodes instructions
   
 let inputParserCases = [
-  TestCaseData([|
+  TestCaseData([
     "LLR"
     ""
     "AAA = (BBB, BBB)"
     "BBB = (AAA, ZZZ)"
     "ZZZ = (ZZZ, ZZZ)"
-  |]).Returns([
+  ]).Returns([
     Left
     Left
     Right
