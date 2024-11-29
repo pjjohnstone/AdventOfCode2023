@@ -4,4 +4,4 @@ let lines = getLines "Day7/input.txt"
 let hands = 
   lines
   |> List.map Day7.parseLine
-printfn "Total Value: %i" (Day7.calculateValue hands)
+printfn $"Total Value: %i{Day7.calculateValue hands}"

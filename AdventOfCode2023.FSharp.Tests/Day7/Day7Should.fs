@@ -111,6 +111,7 @@ let ``Returns total value of hands`` s =
   let (input, _) = s
   Assert.That(calculateValue input, Is.EqualTo 6440)
 
-[<Test>]
-let ``Parse an input line`` =
-  Assert.That(parseLine "26J35 507", Is.EqualTo ("26J35", 507))
+[<TestCase("26J35 507", "26J35", 507)>]
+[<TestCase("77776 507", "77776", 507)>]
+let ``Parse an input line`` input resultString resultInt =
+  Assert.That(parseLine input, Is.EqualTo (resultString, resultInt))
