@@ -47,3 +47,16 @@ let traverseRoute nodes (instructions: Instruction list)  =
       | "ZZZ" -> steps
       | _ -> traverseRouteRec nodes (findNodeByLabel nodes (nextNode instructions.Head activeNode)) instructions.Tail (instructions.Head::usedInstructions) (steps + 1)
   traverseRouteRec nodes (List.head nodes) instructions [] 0
+  
+let parsePuzzleInput input =
+  let instructions =
+    input
+    |> Array.toList
+    |> List.head
+    |> parseInstructions
+  let nodes =
+    input
+    |> Array.skip 2
+    |> Array.toList
+    |> List.map parseNode
+  (instructions, nodes)

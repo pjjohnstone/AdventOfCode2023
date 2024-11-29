@@ -47,3 +47,25 @@ let routeCases = [
 let ``Calculate steps to reach ZZZ`` input =
   let (instructions, nodes) = input
   traverseRoute nodes instructions
+  
+let inputParserCases = [
+  TestCaseData([|
+    "LLR"
+    ""
+    "AAA = (BBB, BBB)"
+    "BBB = (AAA, ZZZ)"
+    "ZZZ = (ZZZ, ZZZ)"
+  |]).Returns([
+    Left
+    Left
+    Right
+  ],[
+    {Label = "AAA"; Left = "BBB"; Right = "BBB"}
+    {Label = "BBB"; Left = "AAA"; Right = "ZZZ"}
+    {Label = "ZZZ"; Left = "ZZZ"; Right = "ZZZ"}
+  ])
+]
+
+[<TestCaseSource("inputParserCases")>]
+let ``Parse whole puzzle input into instructions and nodes`` input =
+  parsePuzzleInput input
